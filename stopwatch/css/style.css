@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-family: Verdana, Arial;
+}
+
+body {
+    background-color: black;
+}
+
+main {
+    position: absolute;
+    width: 100vw;
+    top: 50%;
+    text-align: center;
+}
+
+span {
+    position: absolute;
+    font-size: 24pt;
+}
+
+span:first-of-type {
+    color: rgb(248, 79, 93);
+    filter: blur(3px);
+}
+
+span:last-of-type {
+    position: relative;
+    color: rgb(255, 19, 38);
+    z-index: 2;
+}

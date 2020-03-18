@@ -1,105 +1,122 @@
 "use strict"
 
-document.querySelector('#stopwatch').innerText = "00:00:00"
+window.onload = function() {
 
-let milSec = 0
 
-let sec = 0
+    let display = document.querySelectorAll('span')
 
-let min = 0
+    display.forEach(function(item) {
 
-let hour = 0
+        item.innerText = "00:00:00"
+    })
 
-let checker = true
+    let milSec = 0
 
-setInterval(() => {
+    let sec = 0
 
-    document.querySelector('#stopwatch').innerText = formater(hour, min, sec, milSec)
+    let min = 0
+
+    let hour = 0
+
+    let checker = true
+
+    setInterval(() => {
+
+        display.forEach(function(item) {
     
-    if(checker){
-
-        var dStart = new Date();
-
-        let start = dStart.getMilliseconds();
-
-        console.log(start)
-    }
-
-    if (milSec < 100)
-
-        milSec++
-    else if (milSec === 100) {
-
-        milSec = 0
-
-        sec++
-    }
-    
-    if (sec === 60) {
-
-        sec = 0
-
-        min++
-    }
-
-    if (min === 60) {
-
-        min = 0
-
-        hour++
-    }
-
-    if (hour > 24)
-
-        hour = 0
-
+            item.innerText = formater(hour, min, sec, milSec)
+        })
+        
         if(checker){
 
-            var dEnd = new Date();
+            var dStart = new Date();
 
-            let end = dEnd.getMilliseconds();
+            let start = dStart.getMilliseconds();
 
-            console.log(end)
-
-            checker = false
+            console.log(start)
         }
-}, 10)
 
-function formater(hrs, mins, scs, milscs) {
+        if (milSec < 100)
 
-    let result = ''
+            milSec++
+        
+        if (milSec === 100) {
 
-    if(hrs < 10){
+            milSec = 0
 
-        result += '0' + hrs.toString()
-    } else {
+            sec++
+        }
+        
+        if (sec === 60) {
 
-        result += hrs.toString()
+            sec = 0
+
+            min++
+        }
+
+        if (min === 60) {
+
+            min = 0
+
+            hour++
+        }
+
+        if (hour > 24)
+
+            hour = 0
+
+            if(checker){
+
+                var dEnd = new Date();
+
+                let end = dEnd.getMilliseconds();
+
+                console.log(end)
+
+                checker = false
+            }
+    }, 10)
+
+    function formater(hrs, mins, scs, milscs) {
+
+        let result = ''
+
+        if(hrs < 10){
+
+            result += '0' + hrs.toString()
+        } else {
+
+            result += hrs.toString()
+        }
+
+        if(mins < 10){
+
+            result += ':0' + mins.toString()
+        } else {
+
+            result += ':' + mins.toString()
+        }
+
+        if(scs < 10){
+
+            result += ':0' + scs.toString()
+        } else {
+
+            result += ':' + scs.toString()
+        }
+
+        if (milscs < 10) {
+
+            result += ':0' + milscs.toString()
+        } else {
+            
+    
+                result += ':' + milscs.toString()
+            
+
+        }
+
+        return result
     }
-
-    if(mins < 10){
-
-        result += ':0' + mins.toString()
-    } else {
-
-        result += ':' + mins.toString()
-    }
-
-    if(scs < 10){
-
-        result += ':0' + scs.toString()
-    } else {
-
-        result += ':' + scs.toString()
-    }
-
-    if (milscs < 10) {
-
-        result += ':0' + milscs.toString()
-    } else {
-
-        result += ':' + milscs.toString()
-    }
-
-    return result
-  }
+    
+}
