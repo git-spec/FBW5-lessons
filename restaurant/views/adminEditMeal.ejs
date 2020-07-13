@@ -1,0 +1,252 @@
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <title>Menu</title>
+    <%- include('partials/head') %>
+</head>
+
+<body>
+    <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <%- include('partials/header', {active: 'menu'}) %>
+
+    <!-- bradcam_area_start -->
+    <div class="bradcam_area breadcam_bg overlay">
+        <h3>Edit Meal</h3>
+    </div>
+    <!-- bradcam_area_end -->
+
+    <!-- best_burgers_area_start  -->
+    <div class="best_burgers_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section_title text-center mb-80">
+                        <span>Burger Menu</span>
+                        <h3>Best Ever Burgers</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <% for(let i = 0; i < meals.length; i++) { %>
+                <div class="col-xl-6 col-md-6 col-lg-6">
+                    <div class="single_delicious d-flex align-items-center">
+                        <div class="thumb">
+                            <img class="mealImg" src="<%= meals[i].imgUrl %>" alt="">
+                        </div>
+                        <div class="info">
+                            <label for="meal-title-<%= i %>">Name</label>
+                            <input type="text" name="" class="meal-title form-control" id="meal-title-<%= i %>" value="<%= meals[i].title %>">
+                            <label for="meal-description-<%= i %>">Description</label>
+                            <textarea name="" class="meal-description form-control" id="meal-description-<%= i %>" cols="30" rows="10"><%= meals[i].description %></textarea>
+                            <label for="meal-currency-<% i %>">Currency</label>
+                            <select name="" id="meal-currency-<% i %>">
+                                <option value="">$</option>
+                                <option value="">€</option>
+                            </select>
+                            <label for="meal-price-<% i %>">Price</label>
+                            <input type="number" name="" class="meal-price" id="meal-price-<% i %>" value="<%= meals[i].price %>">
+                            <label for="mealImage">Meal Image</label>
+                            <input type="file" class="form-control-file"  name="mealImage meal-image" id="mealImage" accept="image/x-png, image/gif, image/jpeg, image/svg">
+                            <a href="#" class="btn btn-success mt-3 btn-edit" meal-ID="<%= i %>">Save</a>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
+    </div>
+    <!-- best_burgers_area_end  -->
+
+    <!-- footer_start  -->
+    <footer class="footer">
+            <div class="footer_top">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="footer_widget text-center ">
+                                <h3 class="footer_title pos_margin">
+                                        New York
+                                </h3>
+                                <p>5th flora, 700/D kings road, <br> 
+                                        green lane New York-1782 <br>
+                                        <a href="#">info@burger.com</a></p>
+                                <a class="number" href="#">+10 378 483 6782</a>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-6 col-lg-4">
+                            <div class="footer_widget text-center ">
+                                <h3 class="footer_title pos_margin">
+                                    California
+                                </h3>
+                                <p>5th flora, 700/D kings road, <br> 
+                                        green lane New York-1782 <br>
+                                        <a href="#">info@burger.com</a></p>
+                                <a class="number" href="#">+10 378 483 6782</a>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-4 col-md-12 col-lg-4">
+                                <div class="footer_widget">
+                                        <h3 class="footer_title">
+                                                Stay Connected
+                                        </h3>
+                                        <form action="#" class="newsletter_form">
+                                            <input type="text" placeholder="Enter your mail">
+                                            <button type="submit">Sign Up</button>
+                                        </form>
+                                        <p class="newsletter_text">Stay connect with us to get exclusive offer!</p>
+                                    </div>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-4">
+                            <div class="socail_links text-center">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ti-instagram"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ti-twitter-alt"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ti-facebook"></i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-google-plus"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="copy-right_text">
+                <div class="container">
+                    <div class="footer_border"></div>
+                    <div class="row">
+                        <div class="col-xl-12">
+                            <p class="copy_right text-center">
+                                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </footer>
+    <!-- footer_end  -->
+
+    <%- include('partials/script') %>
+
+    <script>
+        document.querySelectorAll('.btn-edit').forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault()
+                alert(e.target.getAttribute('meal-ID'))
+                const mealID = e.target.getAttribute('meal-ID')
+                const mealTitle = e.target.parentElement.querySelector('.meal-title').value
+                const mealDescription = e.target.parentElement.querySelector('.meal-description').value
+                const mealPrice = e.target.parentElement.querySelector('.meal-price').value
+                const imgFile = e.target.parentElement.querySelector('.form-control-file').files[0] 
+                // build form data for uploading files and data
+                const fd = new FormData()
+                fd.append('mealID', mealID)
+                fd.append('mealTitle', mealTitle)
+                fd.append('mealDescription', mealDescription)
+                fd.append('mealPrice', mealPrice)
+                if(imgFile) {
+                    fd.append('imgFile', imgFile)
+                }
+                // hand over parameter of module form data and url to fetch function
+                postData_formData('/admin/editmeal', fd).then(response => {
+                    if(response.status === 200) {                        
+                        response.json().then(jsonData => {
+                        console.log(jsonData);
+                        
+                        e.target.parentElement.parentElement.querySelector('.mealImg').src = jsonData + "?" + new Date().getTime()})  // info for browser to refresh the new image
+                    }
+                    
+                })
+                /*
+                // hand over parameter to function postData
+                postData('/admin/editmeal', {
+                    mealID: mealID,
+                    mealTitle: mealTitle,
+                    mealDescription: mealDescription,
+                    mealPrice: mealPrice
+                }).then(data => {
+                    console.log(data);  // JSON data parsed by 'response.json()' call
+                    
+                }).catch(error => {
+                    console.log(error);
+                    
+                })
+                */
+                /*
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/editmeal',
+                    data: {
+                        mealID,                 // if property same as parameter (mealID: mealID)
+                        mealTitle,
+                        mealDescription,
+                        mealPrice
+                    },
+                    dataType: 'dataType',
+                    success: function(response) {
+                        
+                    }
+                })
+                */
+            })
+        })
+        // sending data by fetch (Vanilla JS)
+        function postData(url = '', data = {}) {
+            // default options are marked with *
+            return fetch(url, {
+                method: 'POST', // *GET. POST, PUT, DELETE ect. 
+                mode: 'cors',   // no-cors, cors, *same-origin
+                cache: 'no-cache',  // *default, no-cache, reload, force-cache, only-if-cached
+                credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    'Content-Type': 'application/json'                   // express.urlencoded({extended: false})
+                    // 'Content-Type': 'application/x-www-form-urlencoded'     // if 'express.urlencoded({extended: true})'
+                },
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer',  // no-referrer, 
+                body: JSON.stringify(data)  // body data type must match 'Content-Type'
+            }).then(response => {
+                // console.log(response.json());   // parses JSON response into native JS objects
+                response
+            })
+        }
+        // send data as formdata using fetch
+        function postData_formData(url = '', formdata = {}) {
+            // default options are marked with *
+            return fetch(url, {
+                method: 'POST', // *GET. POST, PUT, DELETE ect. 
+                body: formdata  // body data type must match 'Content-Type'
+            }).then(response => {
+                // console.log(response.json());   // parses JSON response into native JS objects
+                return response         // or 'response => response'
+            })
+        }
+    </script>
+
+</body>
+
+</html>
