@@ -22,6 +22,9 @@ app.use(fileupload({
     limits: {fileSize: 50 * 1024 * 1024}
 }))
 
+// import data module
+const dataModule = require('./modules/dataModule')
+
 // create session object
 const session = require('express-session')
 // set session options
@@ -52,7 +55,7 @@ const adminRoute = require('./routes/adminRoute')
 // route to admin
 app.use('/admin', adminRoute.adminRouter(data))
 
-// module for templating
+// module for templating (Embedded JavaScript)
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
 
