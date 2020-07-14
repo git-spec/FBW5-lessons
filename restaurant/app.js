@@ -195,20 +195,23 @@ app.post('/contact1', (req, res) => {
 })
 // route to meal using title
 app.get('/meal/:title', (req, res) => {
-    // search for title in data json
-    const burger = data.find(item => item.title === req.params.title.trim().replace(/_/g, ' '))
-    // send params
-    if(burger) {
-        res.render('meal', {
-            mealTitle: burger.title,
-            mealPrice: '$ ' + burger.price,
-            mealDescription: burger.description,
-            mealImage: burger.imgUrl,
-            mealDetails: burger.details
-        })
-    } else {
-        res.send("This meal doesn't exists")
-    }
+    // search for title in db
+    dataModule.getMeal(req.params.title.trim().replace(/_/g, ' ')).then(meal => {
+        // send params
+        if(meal) {
+            res.render('meal', {
+                mealTitle: meal.title,
+                mealPrice: '$ ' + meal.price,
+                mealDescription: meal.description,
+                mealImage: meal.imgUrl,
+                mealDetails: meal.details
+            })
+        } else {
+            res.send("This meal doesn't exists.")
+        }
+    }).catch(err => {
+        console.error(err)
+    })
 })
 // route to meal using index
 // app.get('/meal/:id', (req, res) => {
