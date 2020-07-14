@@ -11,9 +11,9 @@ const validator = require('validator')
 // import file system
 const fs = require('fs')
 // get json file
-const rawdata = fs.readFileSync(__dirname + '/meals.json')
+// const rawdata = fs.readFileSync(__dirname + '/meals.json')
 // parse to json
-const data = JSON.parse(rawdata)
+// const data = JSON.parse(rawdata)
 
 // import fileupload
 const fileupload = require('express-fileupload')
@@ -51,9 +51,9 @@ app.use(express.urlencoded({extended: false}))
 app.use(express.json())
 
 // import admin router
-const adminRoute = require('./routes/adminRoute')
+const adminRouter = require('./routes/adminRoute')
 // route to admin
-app.use('/admin', adminRoute.adminRouter(data))
+app.use('/admin', adminRouter)
 
 // module for templating (Embedded JavaScript)
 app.set('view engine', 'ejs')
@@ -65,10 +65,10 @@ app.get('/', (req, res) => {
 })
 // route to menu
 app.get('/menu', (req,res) => {
-    let rawdata = fs.readFileSync(__dirname + '/meals.json')
-    let data = JSON.parse(rawdata)
-    // render menu with burger objects
-    res.render('menu', {meals: data})
+    dataModule.getMeals().then(meals => {
+        // render menu with burger objects
+        res.render('menu', {meals: meals})
+    })
 })
 // route to admin/addmeal
 // app.get('/addmeal', (req, res) => {
