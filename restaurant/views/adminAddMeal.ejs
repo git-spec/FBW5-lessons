@@ -66,8 +66,8 @@
                     <input type="number" min="0" name="mealPrice" id="mealPrice" class="form-control"  placeholder="5">
                 </div>
                 <div class="form-group">
-                    <label for="mealDesc">Meal Description</label>
-                    <textarea class="form-control" name="mealDescription" id="mealDesc" rows="3"></textarea>
+                    <label for="Description">Meal Description</label>
+                    <textarea class="form-control" name="mealDescription" id="mealDescription" rows="3"></textarea>
                 </div>
                 <div class="form-group">
                     <label for="mealImage">Meal Image</label>
@@ -172,6 +172,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <%- include('partials/script') %>
 
     <script>
+        // check if meal alrady exists
         document.querySelector('#mealTitle').addEventListener('blur', e => {
             e.preventDefault()
             fetch('/admin/checkmealtitle', {
@@ -179,7 +180,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body:JSON.stringify({
+                body: JSON.stringify({
                     mealTitle: e.target.value
                 })
             }).then(response => {

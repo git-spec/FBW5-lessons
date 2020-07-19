@@ -31,63 +31,58 @@ adminRouter.get('/', (req, res) => {
 
 // route to addmeal
 adminRouter.get('/addmeal', (req, res) => {
-
-    // render adminAddMeal with burger objects
-    res.render('adminAddMeal', {
-        meals: data,
-        check: true
+    dataModule.getMeals().then(data => {
+        // render adminAddMeal with burger objects
+        res.render('adminAddMeal', {
+            meals: data,
+            check: true
+        })
     })
 })
 // get data from admin/addmeal
 adminRouter.post('/addmeal', (req, res) => {
     // catch input data
     const mealTitle = req.body.mealTitle
-    const mealPrice = req.body.mealPrice
     const mealDescription = req.body.mealDescription
+    const mealImage = req.files.mealImage
+    const mealPrice = req.body.mealPrice
     const mealDetails = req.body.mealDetails
     // check if data exist
-    if(mealTitle && mealPrice && mealDescription && req.files) {
-        // compare with db
-        if(data.find(item => item.title == mealTitle)) {
-            // res.send('This meal already exists. Try another one!')
-            res.render('adminAddMeal', {
-                meals: myMeals,
-                check: false
-            })
-        } else {
-            // catch image file
-            const mealImage = req.files.mealImage
-            // get data-type
-            let imgIdx = mealImage.name.substr(mealImage.name.lastIndexOf('.'))
-            // upload image to upload-folder
-            mealImage.mv('./public/upload/' + mealTitle.trim().replace(/ /g, '_') + data.length + imgIdx).then(() => {
-            // create object
-            let obj = {
-                title: mealTitle,
-                description: mealDescription,
-                details: mealDetails,
-                imgUrl: '/upload/' + mealTitle.trim().replace(/ /g, '_') + data.length + imgIdx,
-                price: mealPrice
-            }
-            // add new object to json
-            data.push(obj)
-            // write new json file
-            fs.writeFileSync('./meals.json', JSON.stringify(data))
-            // res.render('adminAddMeal', {meals: meals})
-                res.redirect('/admin/addmeal')
-            }).catch(error => {
-                res.send(error.message)
-            })
+    if(mealTitle && mealPrice && mealDescription && mealImage) {
+        // create object
+        const mealObj = {
+            title: mealTitle,
+            description: mealDescription,
+            img: mealImage,
+            price: mealPrice
         }
+        
+        // compare with db
+        dataModule.addMeal(mealObj).then(result => {
+            if(result === 2) {
+                // res.send('This meal already exists. Try another one!')
+                res.render('adminAddMeal', {
+                    meals: myMeals,
+                    check: false
+                })
+            } else {
+                res.redirect('/admin/addmeal')
+            }
+        }).catch(error => {
+            res.send(error.message)
+        })
+
     }
 })
 // route to checkmealtitle
 adminRouter.post('/checkmealtitle', (req, res) => {
-    if(data.find(item => item.title == mealTitle)) {
-        res.json('exists')
-    } else {
-        res.json('notexists')
-    }
+    dataModule.checkMeal(req.body.mealTitle).then(result => {
+        if(result === 1) {
+            res.json('exists')
+        } else {
+            res.json('notexists')
+        }
+    })
 })
 // route to deletemeal
 adminRouter.get('/deletemeal', (req, res) => {
