@@ -70,29 +70,36 @@ function addMeal(meal) {
             // get data-type of image
             let imgIdx = meal.img.name.substr(meal.img.name.lastIndexOf('.'))
             // rename and upload image to upload-folder
-            meal.img.mv('./public/upload/' + meal.title.trim().replace(/ /g, '_') + DB.collection('meals').find().toArray.length + imgIdx).then(() => {
-                // add to db
-                DB.collection('meals').insertOne({
-                    title: meal.title,
-                    description: meal.description,
-                    imgUrl: '/upload/' + meal.title.trim().replace(/ /g, '_') + DB.collection('meals').find().toArray.length + imgIdx,
-                    price: meal.price
-                }).then(response => {
-                    if(response.result.ok) {
+            DB.collection('meals').find().toArray().then(data => {
+                const mealNum = data.length + 1
+                meal.img.mv('./public/upload/' + meal.title.trim().replace(/ /g, '_') + '_' + mealNum + imgIdx).then(() => {
+                    // add to db
+                    DB.collection('meals').insertOne({
+                        title: meal.title,
+                        description: meal.description,
+                        imgUrl: '/upload/' + meal.title.trim().replace(/ /g, '_') + '_' + mealNum + imgIdx,
+                        price: meal.price
+                    }).then(response => {
+                        if(response.result.ok) {
+                            client.close()
+                            resolve(1)
+                        } else  {
+                            reject(new Error('Cannot insert the meal.'))
+                        }
+                    }).catch(err => {
                         client.close()
-                        resolve(1)
-                    } else  {
-                        reject(new Error('Cannot insert the meal.'))
-                    }
+                        reject(err)
+                    })
                 }).catch(err => {
                     client.close()
-                    reject(err)
+                    reject(err.message)
                 })
             }).catch(err => {
                 client.close()
-                reject(err.message)
+                reject(err)
             })
         }).catch(err => {
+            client.close()
             reject(err)
         })
     }).catch(err => {
@@ -127,10 +134,33 @@ function checkMeal(mealTitle) {
     })
 }
 
+function deleteMeal(title) {
+    return new Promise((resolve, reject) => {
+        connect().then(client => {
+            // select db
+            const DB = client.db('restaurantDB')
+            // select collection and find document
+            DB.collection('meals').deleteOne({title: title}).then(result => {
+                if(result) {
+                    client.close()
+                    resolve(result)
+                } else {
+                    client.close()
+                    reject(new Error('Could not delete the meal!'))
+                }
+            })
+        }).catch(err => {
+            client.close()
+            reject(err.message)
+        })
+    })
+}
+
 // export modules
 module.exports = {
     getMeals,
     getMeal,
     addMeal,
-    checkMeal
+    checkMeal,
+    deleteMeal
 }

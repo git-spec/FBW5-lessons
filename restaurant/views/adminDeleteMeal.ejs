@@ -41,7 +41,7 @@
                                 <h3><%= meals[i].title %></h3>
                                 <p><%= meals[i].description %></p>
                                 <span><%= '$' + meals[i].price %></span>
-                                <a href="#" class="btn btn-danger btn-delete-meal" meal-ID="<%= i %>">Delete</a>
+                                <a href="#" class="btn btn-danger btn-delete-meal" meal-title="<%= meals[i].title %>">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -151,7 +151,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
                     $.ajax({
                         type: 'POST',
                         url: '/admin/deletemeal',
-                        data:{mealID: $(this).attr('meal-ID')},
+                        data:{mealTitle: $(this).attr('meal-title')},
                         dataType: 'text',
                         success: function(response) {
                             // alert('Deleted!')

@@ -126,14 +126,6 @@ app.get('/login', (req, res) => {
         res.render('login')
     }
 })
-// route to logout
-app.get('/logout', (req, res) => {
-    // destroy the session
-    req.session.destroy()
-    // clear cookie on logout
-    res.clearCookie('burgerUser')
-    res.redirect('/')
-})
 app.post('/login', (req, res) => {
     // load users.json
     const usersJSON = fs.readFileSync(__dirname + '/users.json')
@@ -149,7 +141,14 @@ app.post('/login', (req, res) => {
         res.json('not exist')
     }
 })
-
+// route to logout
+app.get('/logout', (req, res) => {
+    // destroy the session
+    req.session.destroy()
+    // clear cookie on logout
+    res.clearCookie('burgerUser')
+    res.redirect('/')
+})
 // route to about
 app.get('/about', (req, res) => {
     res.render('about')
@@ -175,7 +174,6 @@ app.post('/contact', (req, res) => {
     }
     res.json(1)
 })
-
 app.post('/contact1', (req, res) => {
     const name = req.body.name
     const email = req.body.email

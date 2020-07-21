@@ -86,20 +86,31 @@ adminRouter.post('/checkmealtitle', (req, res) => {
 })
 // route to deletemeal
 adminRouter.get('/deletemeal', (req, res) => {
-    res.render('adminDeleteMeal', {meals: data})
+    dataModule.getMeals().then(data => {
+        res.render('adminDeleteMeal', {meals: data})
+    })
 })
 // get meal id to delete
 adminRouter.post('/deletemeal', (req, res) => {
-    const idx = req.body.mealID
+    const title = req.body.mealTitle
     // delete image
-    fs.unlink('./public' + data[idx].imgUrl, (err) => {
-        if (err) throw err
-        console.log('Image was deleted')
+    dataModule.getMeal(title).then(meal => {
+        fs.unlink('./public' + meal.imgUrl, error => {
+            if (error) {
+                res.send(error)
+            } else {
+                console.log('Image was deleted')
+            }
+        })
+    }).catch(err => {
+        res.send(err.message)
     })
     // delete data
-    data.splice(idx, 1)
-    fs.writeFileSync('./meals.json', JSON.stringify(data))
-    res.sendStatus(200)
+    dataModule.deleteMeal(title).then(() => {
+        res.sendStatus(200)
+    }).catch(err => {
+        res.send(err.message)
+    })
 })
 // route to admin/editmeal
 adminRouter.get('/editmeal', (rep, res) => {
